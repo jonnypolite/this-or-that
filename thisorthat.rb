@@ -102,6 +102,6 @@ end
 system 'clear'
 puts pastel.magenta(font.write("Congratulations!"))
 sleep 1.5
-puts pastel.magenta(font.write("You got..."))
+puts pastel.magenta(font.write("You  got..."))
 sleep 2
 puts pastel.green(font.write("#{game.score}   correct!"))
