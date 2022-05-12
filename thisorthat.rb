@@ -58,7 +58,8 @@ def flash(font, pastel, text, color = 'white')
   sleep 0.5
 end
 
-game = ThisOrThatGame.new
+question_count = 10
+game = ThisOrThatGame.new(question_count)
 answers = [
   { name: 'Programming Language', value: 'language' },
   { name: 'Cocktail', value: 'cocktail' }
@@ -80,22 +81,25 @@ puts
 prompt.keypress("Press space to start", keys: [:space])
 
 # Present the questions
+turn_index = 1
 loop do
-  turn = game.get_turn
+  question = game.get_turn
 
-  break if turn.nil?
+  break if question.nil?
 
   system 'clear'
-  answer = prompt.select(font.write(turn), answers)
+  answer = prompt.select(font.write("#{turn_index}.   #{question}"), answers)
 
   success_text = ['Correct!', 'Good  Job!', 'Yup!', 'Way  to  go!']
   fail_text = ['Nope!', 'Wrong!', 'So  Close!', 'Not  Quite!']
-  if game.submit_answer(turn, answer)
+  if game.submit_answer(question, answer)
     flash(font, pastel, success_text.sample, 'green')
     game.increment_score(1)
   else
     flash(font, pastel, fail_text.sample, 'red')
   end
+
+  turn_index += 1
 end
 
 # Final score
@@ -104,4 +108,4 @@ puts pastel.magenta(font.write("Congratulations!"))
 sleep 1.5
 puts pastel.magenta(font.write("You  got..."))
 sleep 2
-puts pastel.green(font.write("#{game.score}   correct!"))
+puts pastel.green(font.write("#{game.score}/#{question_count}   correct!"))
