@@ -20,7 +20,7 @@ class ThisOrThatGame
   attr_reader :score
 
   def initialize
-    @game_selection = LANGUAGES.sample(1).concat(COCKTAILS.sample(1)).shuffle
+    @game_selection = LANGUAGES.sample(5).concat(COCKTAILS.sample(5)).shuffle
     @score = 0
   end
 
