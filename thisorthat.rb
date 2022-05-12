@@ -19,8 +19,11 @@ class ThisOrThatGame
 
   attr_reader :score
 
-  def initialize
-    @game_selection = LANGUAGES.sample(5).concat(COCKTAILS.sample(5)).shuffle
+  def initialize(question_count = 10)
+    raise "Not enough list items to support that many questions" if question_count > 24
+
+    @question_count = question_count.even? ? question_count : question_count - 1
+    @game_selection = LANGUAGES.sample(question_count/2).concat(COCKTAILS.sample(question_count/2)).shuffle
     @score = 0
   end
 
