@@ -41,6 +41,20 @@ class ThisOrThatGame
   end
 end
 
+def flash(font, pastel, text, color = 'white')
+  system 'clear'
+  puts pastel.send(color, font.write(text))
+  sleep 0.5
+  system 'clear'
+  sleep 0.2
+  puts pastel.send(color, font.write(text))
+  sleep 0.5
+  system 'clear'
+  sleep 0.2
+  puts pastel.send(color, font.write(text))
+  sleep 0.5
+end
+
 game = ThisOrThatGame.new
 answers = [
   { name: 'Programming Language', value: 'language' },
@@ -71,15 +85,14 @@ loop do
   system 'clear'
   answer = prompt.select(font.write(turn), answers)
 
-  puts
+  success_text = ['Correct!', 'Good  Job!', 'Yup!', 'Way  to  go!']
+  fail_text = ['Nope!', 'Wrong!', 'So  Close!', 'Not  Quite!']
   if game.submit_answer(turn, answer)
-    puts pastel.green('Correct!')
+    flash(font, pastel, success_text.sample, 'green')
     game.increment_score(1)
   else
-    puts pastel.red('Nope!')
+    flash(font, pastel, fail_text.sample, 'red')
   end
-
-  sleep 2
 end
 
 # Final score
